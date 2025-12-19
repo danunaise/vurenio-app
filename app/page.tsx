@@ -650,19 +650,20 @@ const AIInputOverlay = ({ onClose }: { onClose: () => void }) => {
   const setDemoText = (demo: string) => setText(demo);
 
   return (
-    <div className="absolute inset-0 z-[60] backdrop-blur-xl flex flex-col p-6 animate-in fade-in duration-200" style={{ backgroundColor: 'var(--bg-overlay)' }}>
-      <div className="flex justify-between items-center mb-6">
-        <button onClick={onClose} className="p-2 rounded-full hover:bg-black/5" style={{ backgroundColor: 'var(--glass-bg)', color: 'var(--text-primary)' }}>
-          <X size={24} />
-        </button>
-        <div className="flex items-center gap-2 px-3 py-1 rounded-full border bg-[#A48FFC]/20 border-[#A48FFC]/30">
-          <Sparkles size={14} className="text-[#A48FFC]" />
-          <span className="text-xs font-bold text-[#A48FFC] uppercase tracking-wider">VURENO AI</span>
+    <div className="fixed inset-0 z-[60] h-screen max-h-screen backdrop-blur-xl flex flex-col p-6 overflow-hidden animate-in fade-in duration-200" style={{ backgroundColor: 'var(--bg-overlay)' }}>
+      <div className="w-full max-w-[480px] mx-auto">
+        <div className="flex justify-between items-center mb-6">
+          <button onClick={onClose} className="p-2 rounded-full hover:bg-black/5" style={{ backgroundColor: 'var(--glass-bg)', color: 'var(--text-primary)' }}>
+            <X size={24} />
+          </button>
+          <div className="flex items-center gap-2 px-3 py-1 rounded-full border bg-[#A48FFC]/20 border-[#A48FFC]/30">
+            <Sparkles size={14} className="text-[#A48FFC]" />
+            <span className="text-xs font-bold text-[#A48FFC] uppercase tracking-wider">VURENO AI</span>
+          </div>
+          <div className="w-10"></div>
         </div>
-        <div className="w-10"></div>
       </div>
-
-      <div className="flex-1 flex flex-col">
+      <div className="flex-1 flex flex-col overflow-y-auto no-scrollbar">
         <h2 className="text-2xl font-bold mb-6 text-center animate-in fade-in slide-in-from-bottom-4" style={{ color: 'var(--text-primary)' }}>
           ให้ช่วยอะไรดีครับ?
         </h2>
@@ -688,7 +689,7 @@ const AIInputOverlay = ({ onClose }: { onClose: () => void }) => {
           </div>
         )}
 
-        <div className="flex-1">
+        <div>
           {isThinking && (
             <div className="flex flex-col items-center justify-center gap-3 text-[#A48FFC] animate-pulse py-10">
               <Sparkles size={32} />
@@ -806,9 +807,9 @@ const AIInputOverlay = ({ onClose }: { onClose: () => void }) => {
         </div>
       </div>
 
-      {/* Mic Button at bottom for Voice Mode */}
+      {/* Mic Button for Voice Mode (lifted a bit from bottom) */}
       {!text && !result && !isThinking && (
-        <div className="flex justify-center pb-10 mt-auto animate-in fade-in duration-500">
+        <div className="mt-14 mb-10 flex justify-center animate-in fade-in duration-500">
           <button
             onClick={() => setDemoText("พรุ่งนี้มีประชุม 10 โมงที่ตึก G-tower")}
             className="relative group p-6 rounded-full bg-[#A48FFC]/10 border border-[#A48FFC]/30 hover:bg-[#A48FFC]/20 transition-all active:scale-95"
@@ -1859,10 +1860,10 @@ const HomeScreen = ({ onOpenAI, onSelectEvent }: { onOpenAI: () => void, onSelec
           <h1 className="text-2xl font-bold leading-tight" style={{ color: 'var(--text-primary)' }}>คุณ Alex</h1>
 
           {/* Location - Minimal Text */}
-          <div className="flex items-center gap-1 mt-1 opacity-70">
+          {/* <div className="flex items-center gap-1 mt-1 opacity-70">
             <MapPin size={12} className="text-[#A48FFC]" />
             <span className="text-xs" style={{ color: 'var(--text-secondary)' }}>สาทร</span>
-          </div>
+          </div> */}
         </div>
 
         {/* Avatar with Progress Ring */}
@@ -1898,32 +1899,25 @@ const HomeScreen = ({ onOpenAI, onSelectEvent }: { onOpenAI: () => void, onSelec
       <div className="mb-6 space-y-3">
         {/* Weather Info Line - No borders, just clean text & icons */}
         <div className="flex items-center gap-4 text-xs font-medium opacity-90 overflow-x-auto no-scrollbar">
-          <div className="flex items-center gap-1.5" style={{ color: 'var(--text-primary)' }}>
+          <div className="flex items-center gap-1.5" style={{ color: 'var(--text-secondary)' }}>
+            <MapPin size={16} className="text-[#A48FFC]" />
+            <span className="text-xs" style={{ color: 'var(--text-primary)' }}>สาทร</span>
+          </div>
+          <div className="w-[1px] h-3 bg-white/10"></div>
+          <div className="flex items-center gap-1.5" style={{ color: 'var(--text-secondary)' }}>
             <CloudSun size={16} className="text-yellow-400" />
             <span>28°C</span>
           </div>
           <div className="w-[1px] h-3 bg-white/10"></div>
-          <div className="flex items-center gap-1.5" style={{ color: 'var(--text-primary)' }}>
+          <div className="flex items-center gap-1.5" style={{ color: 'var(--text-secondary)' }}>
             <Wind size={16} className="text-green-400" />
             <span>35</span>
           </div>
           <div className="w-[1px] h-3 bg-white/10"></div>
-          <div className="flex items-center gap-1.5" style={{ color: 'var(--text-primary)' }}>
+          <div className="flex items-center gap-1.5" style={{ color: 'var(--text-secondary)' }}>
             <Droplets size={16} className="text-blue-400" />
             <span>10%</span>
           </div>
-        </div>
-
-        {/* AI Insight - Subtle Glass Container */}
-        <div className="p-3 rounded-xl flex items-start gap-3 border transition-colors"
-          style={{
-            background: 'linear-gradient(90deg, rgba(164,143,252,0.1) 0%, rgba(164,143,252,0.02) 100%)',
-            borderColor: 'rgba(164,143,252,0.15)'
-          }}>
-          <Sparkles size={16} className="text-[#A48FFC] mt-0.5 shrink-0" />
-          <p className="text-xs leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
-            วันนี้อากาศดี เหมาะแก่การออกกำลังกายที่สวนลุมฯ นะครับ 🏃
-          </p>
         </div>
       </div>
 
@@ -1951,14 +1945,25 @@ const HomeScreen = ({ onOpenAI, onSelectEvent }: { onOpenAI: () => void, onSelec
         </GlassCard>
       </div>
 
-      <AICommandBar onClick={onOpenAI} />
+      {/* <AICommandBar onClick={onOpenAI} /> */}
 
-      <div className="flex gap-3 overflow-x-auto pb-6 no-scrollbar">
+      {/* <div className="flex gap-3 overflow-x-auto pb-6 no-scrollbar">
         {['เพิ่มเวลาโฟกัสงาน', 'เตือนดื่มน้ำ', 'วางแผนเที่ยวสุดสัปดาห์'].map((chip, i) => (
           <button key={i} className="whitespace-nowrap px-4 py-2 rounded-full border text-xs font-medium hover:bg-black/5 transition-colors" style={{ borderColor: 'var(--glass-border)', backgroundColor: 'var(--glass-bg)', color: 'var(--text-secondary)' }}>
             {chip}
           </button>
         ))}
+      </div> */}
+      {/* AI Insight - Subtle Glass Container */}
+      <div className="p-3 rounded-xl flex items-start gap-3 border transition-colors mb-5"
+        style={{
+          background: 'linear-gradient(90deg, rgba(164,143,252,0.1) 0%, rgba(164,143,252,0.02) 100%)',
+          borderColor: 'rgba(164,143,252,0.15)'
+        }}>
+        <Sparkles size={16} className="text-[#A48FFC] mt-0.5 shrink-0" />
+        <p className="text-xs leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
+          วันนี้อากาศดี เหมาะแก่การออกกำลังกายที่สวนลุมฯ นะครับ 🏃
+        </p>
       </div>
 
       <div>
@@ -2119,8 +2124,8 @@ export default function VurenoApp() {
         <div className="fixed -bottom-[200px] -left-[200px] w-[500px] h-[500px] bg-[#A48FFC] rounded-full blur-[150px] opacity-[0.1] pointer-events-none"></div>
 
         {/* Main App Wrapper - mobile first */}
-        <div className="relative z-10 w-full max-w-[480px] mx-auto min-h-screen overflow-hidden">
-          <div className="h-full w-full overflow-hidden relative pb-[90px]">
+        <div className="relative z-10 w-full max-w-[480px] mx-auto min-h-screen overflow-x-hidden">
+          <div className="h-full w-full relative pb-[90px]">
             {renderScreen()}
 
             {/* Overlays */}
