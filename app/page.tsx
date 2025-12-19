@@ -172,7 +172,7 @@ const BottomNav = ({ activeTab, onNavigate, onAdd }: { activeTab: string, onNavi
 
   return (
     <div
-      className="absolute bottom-0 left-0 w-full h-[90px] backdrop-blur-lg border-t flex items-center justify-around px-2 z-50 rounded-t-[30px] transition-colors duration-300"
+      className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[480px] h-[90px] backdrop-blur-lg border-t flex items-center justify-around px-2 z-50 rounded-t-[30px] transition-colors duration-300"
       style={{
         backgroundColor: 'var(--nav-bg)',
         borderColor: 'var(--glass-border)'
@@ -2111,22 +2111,16 @@ export default function VurenoApp() {
 
   return (
     <ThemeContext.Provider value={{ isDarkMode, toggleTheme }}>
-      <div
-        className="w-full h-screen flex items-center justify-center font-sans overflow-hidden transition-colors duration-500"
-        style={{ backgroundColor: isDarkMode ? '#000' : '#e5e7eb' }}
-      >
+      <div className="w-full min-h-screen font-sans overflow-hidden transition-colors duration-500" style={{ backgroundColor: 'var(--bg-primary)' }}>
         <style>{`:root { ${themeStyles} } .no-scrollbar::-webkit-scrollbar { display: none; }`}</style>
 
         {/* Global Background Elements */}
         <div className="fixed -top-[200px] -right-[200px] w-[500px] h-[500px] bg-[#79D4FF] rounded-full blur-[150px] opacity-[0.08] pointer-events-none"></div>
         <div className="fixed -bottom-[200px] -left-[200px] w-[500px] h-[500px] bg-[#A48FFC] rounded-full blur-[150px] opacity-[0.1] pointer-events-none"></div>
 
-        {/* Mobile Container Frame */}
-        <div
-          className="relative z-10 w-full max-w-[400px] h-full sm:h-[850px] sm:rounded-[40px] shadow-2xl overflow-hidden border-[8px] sm:border-[#1a1f35] transition-colors duration-300"
-          style={{ backgroundColor: 'var(--bg-primary)', borderColor: isDarkMode ? '#1a1f35' : '#fff' }}
-        >
-          <div className="h-full w-full overflow-hidden relative">
+        {/* Main App Wrapper - mobile first */}
+        <div className="relative z-10 w-full max-w-[480px] mx-auto min-h-screen overflow-hidden">
+          <div className="h-full w-full overflow-hidden relative pb-[90px]">
             {renderScreen()}
 
             {/* Overlays */}
@@ -2134,7 +2128,7 @@ export default function VurenoApp() {
             {selectedEvent && <EventDetailOverlay event={selectedEvent} onClose={() => setSelectedEvent(null)} />}
           </div>
 
-          {/* Show Bottom Nav only on main screens */}
+          {/* Bottom Nav for main screens */}
           {!['login', 'signup', 'subscription', 'settings-notifications', 'settings-general', 'support', 'edit-profile'].includes(screen) && (
             <BottomNav
               activeTab={screen}
